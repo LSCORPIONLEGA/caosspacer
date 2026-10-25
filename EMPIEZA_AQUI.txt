@@ -1,0 +1,34 @@
+CAOSSPACER - COMO OBTENER EL INSTALADOR PARA WINDOWS 10  (sin instalar programas de desarrollo)
+=====================================================================================================
+
+Lo que NO pude hacer yo: crear el archivo .exe, porque para eso hace falta compilar en Windows.
+Lo que SI deje listo: un "robot" gratuito de GitHub que compila el plugin y fabrica el instalador por ti.
+
+PASO 1  Crea una cuenta gratis en https://github.com (si no tienes una).
+PASO 2  Crea un repositorio nuevo: boton "+" arriba a la derecha -> "New repository" -> ponle un nombre (por ejemplo CaosSpacer)
+        -> deja "Public" (los repositorios publicos tienen minutos de compilacion gratis) -> "Create repository".
+PASO 3  Descomprime CaosSpacer.zip en tu PC. En la pagina del repositorio pulsa "uploading an existing file"
+        y ARRASTRA el CONTENIDO de la carpeta CaosSpacer (las carpetas dsp, plugin, installer, tests, .github y los archivos).
+        Pulsa "Commit changes".
+        * Importante: tiene que subirse la carpeta ".github" (empieza con punto). Si no aparece despues de subir:
+          "Add file" -> "Create new file", escribe como nombre   .github/workflows/build-windows.yml
+          (las barras crean las carpetas) y pega ahi el contenido de ese archivo.
+PASO 4  Abre la pestana "Actions". Veras "Compilar CaosSpacer (Windows)" ejecutandose (circulo amarillo). Tarda unos 10-20 minutos
+        la primera vez (descarga JUCE y compila). Cuando salga una palomita verde, entra en esa ejecucion.
+PASO 5  Abajo, en "Artifacts", descarga:
+          CaosSpacer-INSTALADOR-Windows        <- el instalador (un .zip que contiene CaosSpacer-Setup.exe)  <== ESTE ES EL QUE QUIERES
+          CaosSpacer-INSTALADOR-Windows-grafico <- igual, con editor grafico (si aparece)
+          CaosSpacer-vst3 / CaosSpacer-dll-y-cli <- el plugin suelto y el .dll del motor
+PASO 6  Descomprime y ejecuta CaosSpacer-Setup.exe. Si Windows muestra "Windows protegio su PC":
+        pulsa "Mas informacion" -> "Ejecutar de todas formas" (sale porque el instalador no tiene firma digital de pago).
+        Se instala en C:\Program Files\Common Files\VST3\CaosSpacer.vst3
+PASO 7  Abre tu DAW, vuelve a escanear plugins y busca "CaosSpacer" en efectos. Ponlo en la pista que quieres "hacerle sitio" y
+        manda la pista dominante (voz, bombo...) a su entrada SIDECHAIN.
+
+SI ALGO FALLA
+  * Una "X" roja en Actions = error al compilar (puede pasar: no pude probar la compilacion aqui). Abre la ejecucion, entra en el
+    paso rojo, copia las ultimas 30 lineas del error y pasamelas: lo corrijo y te devuelvo los archivos.
+  * Si dices "no me deja" en un paso concreto, dime EN CUAL PASO y que mensaje sale; asi te ayudo directo.
+
+ALTERNATIVA (si tienes Visual Studio 2022 + CMake en tu PC): ejecuta build_windows.bat. Si ademas instalas Inno Setup 6 (gratis),
+crea installer_out\CaosSpacer-Setup.exe.
